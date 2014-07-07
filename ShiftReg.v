@@ -73,13 +73,13 @@ module Delay #(parameter BIT = 8, DELAY = 3)
 	input [BIT-1:0] i_data,
 	output [BIT-1:0] o_data
 );
-	reg [BIT-1:0] data_buf [0:NDATA-1];
+	reg [BIT-1:0] data_buf [0:DELAY-1];
 	assign o_data = data_buf[0];
 
 	always@(posedge i_clk) begin
-		for (int i = 0; i < NDATA-1; ++i) begin
-			data_buf_r[i] <= data_buf_w[i];
+		for (int i = 0; i < DELAY-1; ++i) begin
+			data_buf[i] <= data_buf[i+1];
 		end
-		data_buf_w[NDATA-1] <= i_data;
+		data_buf[DELAY-1] <= i_data;
 	end
 endmodule
